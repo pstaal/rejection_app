@@ -243,15 +243,33 @@ describe("rejection/deleteQuestion", async (assert) => {
 });
 
 describe("rejection/pageStateLoaded", async (assert) => {
-  const loadedState = createState({
-    questions: createSampleQuestions(),
-  });
-  const newState = withSlice(reducer(reducer(), pageStateLoaded(loadedState)));
+  {
+    const loadedState = createState({
+      questions: createSampleQuestions(),
+    });
+    const newState = withSlice(
+      reducer(reducer(), pageStateLoaded(loadedState))
+    );
 
-  assert({
-    given: "some loaded state",
-    should: "add to the reducer state",
-    actual: getState(newState),
-    expected: loadedState,
-  });
+    assert({
+      given: "some loaded state",
+      should: "add to the reducer state",
+      actual: getState(newState),
+      expected: loadedState,
+    });
+  }
+  {
+    const loadedState = undefined;
+    const newState = withSlice(
+      reducer(reducer(), pageStateLoaded(loadedState))
+    );
+    const expectedState = reducer();
+
+    assert({
+      given: "loadedState is undefined",
+      should: "not change the state",
+      actual: getState(newState),
+      expected: expectedState,
+    });
+  }
 });

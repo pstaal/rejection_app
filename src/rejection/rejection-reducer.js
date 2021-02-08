@@ -68,7 +68,7 @@ const reducer = (state = [], { type, payload } = {}) => {
         return question.id !== payload.id;
       });
     case pageStateLoaded.type:
-      return payload;
+      return payload || state;
     default:
       return state;
   }
